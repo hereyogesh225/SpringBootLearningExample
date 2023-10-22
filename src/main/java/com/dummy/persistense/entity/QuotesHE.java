@@ -1,6 +1,5 @@
 package com.dummy.persistense.entity;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,12 +13,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuotesHE implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class QuotesHE extends BaseEntity {
+
     @Id
     private int id;
+
     @Column(name = "QUOTE", nullable = false)
     private String quote;
+
     @Column(name = "AUTHOR", nullable = false)
     private String author;
 }

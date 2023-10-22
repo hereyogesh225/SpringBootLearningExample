@@ -1,6 +1,5 @@
 package com.dummy.persistense.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CollectionTable;
@@ -18,9 +17,7 @@ import lombok.Setter;
 @Table(name = "product")
 @Getter
 @Setter
-public class ProductHE implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ProductHE extends BaseEntity {
 
     @Id
     private Integer id;
