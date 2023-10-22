@@ -18,11 +18,15 @@ public class Mapper {
         return modelMapper.map(quote, QuotesHE.class);
     }
 
+    public Quote entityToModel(QuotesHE quotesHE) {
+        return modelMapper.map(quotesHE, Quote.class);
+    }
+
     public ProductHE modelToEntity(Product product) {
         return modelMapper.map(product, ProductHE.class);
     }
 
-    public Quote entityToModel(QuotesHE quotesHE) {
-        return modelMapper.map(quotesHE, Quote.class);
+    public Product entityToModel(ProductHE productHE) {
+        return modelMapper.map(productHE, Product.class);
     }
 }

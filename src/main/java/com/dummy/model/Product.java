@@ -1,6 +1,6 @@
 package com.dummy.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -15,5 +15,5 @@ public class Product {
     private String brand;
     private String category;
     private String thumbnail;
-    private ArrayList<String> images;
+    private List<String> images;
 }
