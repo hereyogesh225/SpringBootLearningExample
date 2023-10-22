@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/quotes")
+@RequestMapping("/quotes/")
 public class QuotesController {
 
     @Autowired
@@ -24,12 +24,12 @@ public class QuotesController {
         return quoteService.saveQuote(quote);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Quote getQuotes(@PathVariable int id) {
-       return quoteService.getQuoteFromDB(id);
+        return quoteService.getQuoteFromDB(id);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Quote> getQuotes() {
         return quoteService.getQuotesFromDB();
     }

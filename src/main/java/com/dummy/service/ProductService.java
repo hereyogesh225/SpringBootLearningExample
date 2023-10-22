@@ -1,29 +1,61 @@
 package com.dummy.service;
 
 import com.dummy.model.Product;
-import com.dummy.model.ProductDetailsResponse;
-import com.dummy.model.Quote;
-import com.dummy.model.QuoteDetailsResponse;
-import java.net.URI;
+import com.dummy.persistense.entity.ProductHE;
+import com.dummy.persistense.repository.ProductRepository;
+import com.dummy.utils.Mapper;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ProductService {
 
-    private static final String HTTPS_DUMMYJSON_COM_QUOTES = "https://dummyjson.com/products";
     @Autowired
-    private RestTemplate restTemplate;
-    
-    public List<Product> getProducts() {
-        ResponseEntity<ProductDetailsResponse> response = restTemplate
-                .getForEntity(HTTPS_DUMMYJSON_COM_QUOTES, ProductDetailsResponse.class);
+    private Mapper mapper;
 
-        ProductDetailsResponse body = response.getBody();
-        System.out.println("-------------------- " + body.getProducts());
-        return body.getProducts();
+    @Autowired
+    private ProductRepository productRepository;
+
+    public List<Product> getProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(mapper::entityToModel)
+                .collect(Collectors.toList());
+    }
+
+    public Product getProductById(int id) {
+        return productRepository.findById(id)
+                .map(mapper::entityToModel)
+                .orElse(null);
+    }
+
+    public List<Product> getProductsByCategory(String category) {
+        return productRepository.findAllByCategory(category)
+                .stream()
+                .map(mapper::entityToModel)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteProductById(Integer id) {
+        productRepository.findById(id)
+                .ifPresent(s -> productRepository.deleteById(id));
+    }
+
+    @Transactional
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
+    }
+
+    @Transactional
+    public List<ProductHE> deleteProductsByCategory(String category) {
+        return productRepository.deleteByCategory(category);
+    }
+
+    @Transactional
+    public List<ProductHE> removeByBrand(String brand) {
+        return productRepository.removeByBrand(brand);
     }
 }
