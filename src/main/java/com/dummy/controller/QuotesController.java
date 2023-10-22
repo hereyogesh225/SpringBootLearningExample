@@ -24,6 +24,11 @@ public class QuotesController {
         return quoteService.saveQuote(quote);
     }
 
+    @GetMapping("findFirst3")
+    public List<Quote> findFirst3RecordsByQuoteDescOrder() {
+        return quoteService.findFirst3RecordsByQuoteInDescOrder();
+    }
+
     @GetMapping("{id}")
     public Quote getQuotes(@PathVariable int id) {
         return quoteService.getQuoteFromDB(id);
@@ -32,5 +37,21 @@ public class QuotesController {
     @GetMapping
     public List<Quote> getQuotes() {
         return quoteService.getQuotesFromDB();
+    }
+
+    @GetMapping("order")
+    public List<Quote> getQuotesByOrder() {
+        return quoteService.getQuotesByOrder();
+    }
+
+    @GetMapping("order/{author}")
+    public List<Quote> getAuthorQuotesByAsc(@PathVariable String author) {
+        return quoteService.getAuthorQuotesAscOrder(author);
+    }
+
+    @GetMapping("order/{author}/{direction}")
+    public List<Quote> getAuthorQuotesByOrder(@PathVariable String author,
+            @PathVariable String direction) {
+        return quoteService.getQuotesByAuthorNameByOrder(author, direction);
     }
 }
