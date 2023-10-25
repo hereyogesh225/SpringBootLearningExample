@@ -1,5 +1,6 @@
 package com.dummy.pdf;
 
+import com.dummy.model.Product;
 import com.dummy.model.Quote;
 import com.dummy.utils.Constants;
 import com.lowagie.text.Document;
@@ -21,29 +22,32 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 @AllArgsConstructor
 public class QuotePDFExporter {
     private List<Quote> quotes;
- 
+
     private void writeTableHeader(PdfPTable table) {
         PdfPCell cell = new PdfPCell();
         cell.setBackgroundColor(Color.BLUE);
         cell.setPadding(5);
-         
+
         Font font = FontFactory.getFont(FontFactory.HELVETICA);
         font.setColor(Color.WHITE);
-         
+
         cell.setPhrase(new Phrase("Sr.No", font));
         table.addCell(cell);
-         
+
         cell.setPhrase(new Phrase("Quote", font));
         table.addCell(cell);
-         
+
         cell.setPhrase(new Phrase("Author", font));
         table.addCell(cell);
     }
-     
+
     private void writeTableData(PdfPTable table) {
         for (Quote user : quotes) {
             table.addCell(String.valueOf(user.getId()));
@@ -51,26 +55,26 @@ public class QuotePDFExporter {
             table.addCell(user.getAuthor());
         }
     }
-     
+
     private void export(HttpServletResponse response) throws DocumentException, IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
-         
+
         document.open();
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         font.setSize(18);
         font.setColor(Color.BLUE);
-         
+
         Paragraph p = new Paragraph("List of Quotes", font);
         p.setAlignment(Paragraph.ALIGN_CENTER);
-         
+
         document.add(p);
-         
+
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100f);
         table.setWidths(new float[] {1.0f, 5.5f, 2.0f});
         table.setSpacingBefore(12);
-         
+
         writeTableHeader(table);
         writeTableData(table);
         document.add(table);
@@ -87,5 +91,24 @@ public class QuotePDFExporter {
 
         QuotePDFExporter exporter = new QuotePDFExporter(quotes);
         exporter.export(response);
+    }
+
+    public void downloadCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_PATTERN);
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerValue = "attachment; filename=quotes_" + currentDateTime + ".csv";
+        response.setHeader(Constants.CONTENT_DISPOSITION, headerValue);
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Sr.No", "Quote", "Author Name"};
+        String[] nameMapping = {"id", "quote", "author"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (Quote quote : quotes) {
+            csvWriter.write(quote, nameMapping);
+        }
+        csvWriter.close();
     }
 }

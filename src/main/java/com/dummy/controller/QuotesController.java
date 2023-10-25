@@ -26,6 +26,11 @@ public class QuotesController {
         quoteService.downloadPDF(httpServletResponse);
     }
 
+    @GetMapping(value = "csv")
+    public void downloadCSV(HttpServletResponse response) throws Exception {
+        quoteService.downloadCSV(response);
+    }
+
     @PostMapping
     public QuotesHE getQuotesHE(@RequestBody Quote quote) {
         return quoteService.saveQuote(quote);

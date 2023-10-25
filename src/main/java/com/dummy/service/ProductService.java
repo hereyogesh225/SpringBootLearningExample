@@ -73,4 +73,9 @@ public class ProductService {
         ProductPDFExporter productPDFExporter = new ProductPDFExporter(getProducts());
         productPDFExporter.downloadPDF(response);
     }
+
+    public void downloadCSV(HttpServletResponse response) throws Exception {
+        ProductPDFExporter productPDFExporter = new ProductPDFExporter(getProducts());
+        productPDFExporter.downloadCSV(response);
+    }
 }

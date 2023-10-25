@@ -21,6 +21,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 @AllArgsConstructor
 public class ProductPDFExporter {
@@ -99,5 +102,24 @@ public class ProductPDFExporter {
 
         ProductPDFExporter exporter = new ProductPDFExporter(this.products);
         exporter.export(response);
+    }
+
+    public void downloadCSV(HttpServletResponse response) throws Exception {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_PATTERN);
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerValue = "attachment; filename=products_" + currentDateTime + ".csv";
+        response.setHeader(Constants.CONTENT_DISPOSITION, headerValue);
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Sr.No", "Title", "Description", "Price", "category", "brand"};
+        String[] nameMapping = {"id", "title", "description", "price", "category", "brand"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (Product product : products) {
+            csvWriter.write(product, nameMapping);
+        }
+        csvWriter.close();
     }
 }

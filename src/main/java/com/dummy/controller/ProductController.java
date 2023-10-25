@@ -29,6 +29,11 @@ public class ProductController {
         productService.downloadPDF(response);
     }
 
+    @GetMapping(value = "csv")
+    public void downloadCSV(HttpServletResponse response) throws Exception {
+        productService.downloadCSV(response);
+    }
+
     @GetMapping("category/{category}")
     public List<Product> listProductsByCategory(@PathVariable String category) {
         return productService.getProductsByCategory(category);

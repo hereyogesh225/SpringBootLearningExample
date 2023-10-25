@@ -69,4 +69,9 @@ public class QuoteService {
         QuotePDFExporter quotePDFExporter = new QuotePDFExporter(getQuotesFromDB());
         quotePDFExporter.downLoadPdf(httpServletResponse);
     }
+
+    public void downloadCSV(HttpServletResponse httpServletResponse) throws Exception {
+        QuotePDFExporter quotePDFExporter = new QuotePDFExporter(getQuotesFromDB());
+        quotePDFExporter.downloadCSV(httpServletResponse);
+    }
 }
