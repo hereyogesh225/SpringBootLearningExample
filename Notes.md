@@ -17,3 +17,8 @@
 * https://www.bezkoder.com/spring-boot-controlleradvice-exceptionhandler/
 * https://www.javainuse.com/spring/boot-exception-handling
 * https://www.baeldung.com/spring-boot-custom-error-page
+
+### How to generate PDF report
+* https://springjava.com/spring-boot/export-data-into-pdf-file-in-spring-boot
+* https://zetcode.com/springboot/servepdf/
+* https://www.codejava.net/frameworks/spring-boot/pdf-export-example

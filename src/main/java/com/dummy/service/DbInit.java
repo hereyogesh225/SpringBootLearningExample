@@ -46,7 +46,7 @@ public class DbInit {
     @Transactional
     private void saveQuotes(RestTemplate restTemplate) {
         int size = quotesRepository.findAll().size();
-        if (size < 1 || size < 100) {
+        if (size < 100) {
             log.info("deleting all quotes, size is {}", size);
             quotesRepository.deleteAll();
             log.info("quotes deleted, size is {}", size);

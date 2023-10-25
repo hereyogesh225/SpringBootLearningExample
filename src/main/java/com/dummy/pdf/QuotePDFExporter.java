@@ -1,6 +1,7 @@
 package com.dummy.pdf;
 
 import com.dummy.model.Quote;
+import com.dummy.utils.Constants;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 
 @AllArgsConstructor
 public class QuotePDFExporter {
@@ -32,7 +34,7 @@ public class QuotePDFExporter {
         Font font = FontFactory.getFont(FontFactory.HELVETICA);
         font.setColor(Color.WHITE);
          
-        cell.setPhrase(new Phrase("Quote ID", font));
+        cell.setPhrase(new Phrase("Sr.No", font));
         table.addCell(cell);
          
         cell.setPhrase(new Phrase("Quote", font));
@@ -66,7 +68,7 @@ public class QuotePDFExporter {
          
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {1.5f, 3.5f, 3.0f});
+        table.setWidths(new float[] {1.0f, 5.5f, 2.0f});
         table.setSpacingBefore(12);
          
         writeTableHeader(table);
@@ -76,13 +78,12 @@ public class QuotePDFExporter {
     }
 
     public void downLoadPdf(HttpServletResponse response) throws IOException {
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+        DateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_PATTERN);
         String currentDateTime = dateFormatter.format(new Date());
 
-        String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=quotes_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
+        response.setHeader(Constants.CONTENT_DISPOSITION, headerValue);
 
         QuotePDFExporter exporter = new QuotePDFExporter(quotes);
         exporter.export(response);
