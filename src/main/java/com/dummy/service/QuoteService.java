@@ -1,11 +1,14 @@
 package com.dummy.service;
 
 import com.dummy.model.Quote;
+import com.dummy.pdf.QuotePDFExporter;
 import com.dummy.persistense.entity.QuotesHE;
 import com.dummy.persistense.repository.QuotesRepository;
 import com.dummy.utils.Mapper;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -60,5 +63,10 @@ public class QuoteService {
     public List<Quote> findFirst3RecordsByQuoteInDescOrder() {
         return quotesRepository.findFirst3ByOrderByQuoteDesc()
                 .stream().map(mapper::entityToModel).collect(Collectors.toList());
+    }
+
+    public void downloadPDF(HttpServletResponse httpServletResponse) throws IOException {
+        QuotePDFExporter quotePDFExporter = new QuotePDFExporter(getQuotesFromDB());
+        quotePDFExporter.downLoadPdf(httpServletResponse);
     }
 }

@@ -4,6 +4,7 @@ import com.dummy.model.Product;
 import com.dummy.persistense.entity.ProductHE;
 import com.dummy.service.ProductService;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,11 @@ public class ProductController {
     @GetMapping
     public List<Product> listProducts() {
         return productService.getProducts();
+    }
+
+    @GetMapping(value = "pdf")
+    public void getAuthorQuotesInPdfFormat(HttpServletResponse response) throws Exception {
+        productService.downloadPDF(response);
     }
 
     @GetMapping("category/{category}")

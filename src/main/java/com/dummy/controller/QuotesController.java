@@ -3,7 +3,9 @@ package com.dummy.controller;
 import com.dummy.model.Quote;
 import com.dummy.persistense.entity.QuotesHE;
 import com.dummy.service.QuoteService;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,11 @@ public class QuotesController {
 
     @Autowired
     private QuoteService quoteService;
+
+    @GetMapping(value = "pdf")
+    public void getAuthorQuotesInPdfFormat(HttpServletResponse httpServletResponse) throws IOException {
+        quoteService.downloadPDF(httpServletResponse);
+    }
 
     @PostMapping
     public QuotesHE getQuotesHE(@RequestBody Quote quote) {

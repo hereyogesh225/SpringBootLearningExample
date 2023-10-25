@@ -2,12 +2,14 @@ package com.dummy.service;
 
 import com.dummy.exception.ResourceNotFoundException;
 import com.dummy.model.Product;
+import com.dummy.pdf.ProductPDFExporter;
 import com.dummy.persistense.entity.ProductHE;
 import com.dummy.persistense.repository.ProductRepository;
 import com.dummy.utils.Mapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,5 +67,10 @@ public class ProductService {
     @Transactional
     public List<ProductHE> removeByBrand(String brand) {
         return productRepository.removeByBrand(brand);
+    }
+
+    public void downloadPDF(HttpServletResponse response) throws Exception {
+        ProductPDFExporter productPDFExporter = new ProductPDFExporter(getProducts());
+        productPDFExporter.downloadPDF(response);
     }
 }
