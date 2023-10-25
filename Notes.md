@@ -22,3 +22,14 @@
 * https://springjava.com/spring-boot/export-data-into-pdf-file-in-spring-boot
 * https://zetcode.com/springboot/servepdf/
 * https://www.codejava.net/frameworks/spring-boot/pdf-export-example
+
+### How to generate CSV file
+
+* https://www.codejava.net/frameworks/spring-boot/csv-export-example
+* https://www.codejava.net/frameworks/spring/spring-mvc-with-csv-file-download-example
+
+### Spring boot profiles
+
+* https://www.springboottutorial.com/spring-boot-profiles
+* https://www.baeldung.com/spring-profiles
+* https://dzone.com/articles/spring-boot-profiles-1
