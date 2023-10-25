@@ -14,8 +14,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class QuoteService {
 
-    public static final String GET_QUOTES = "https://dummyjson.com/quotes/";
-
     @Autowired
     private Mapper mapper;
 
@@ -38,20 +36,15 @@ public class QuoteService {
 
     public List<Quote> getQuotesFromDB() {
         List<QuotesHE> quotes = quotesRepository.findAll();
-        List<Quote> result = quotes.stream()
+        return quotes.stream()
                 .map(mapper::entityToModel)
                 .collect(Collectors.toList());
-        return result;
     }
 
     public List<Quote> getQuotesByAuthorNameByOrder(String author, String direction) {
-        if("ASC".equalsIgnoreCase(direction)) {
-           return quotesRepository.findByAuthor(author, Sort.by(Sort.Direction.ASC,"quote"))
-                   .stream().map(mapper::entityToModel).collect(Collectors.toList());
-        } else {
-            return quotesRepository.findByAuthor(author, Sort.by(Sort.Direction.DESC, "quote"))
-                    .stream().map(mapper::entityToModel).collect(Collectors.toList());
-        }
+        Sort.Direction directionEnum = Sort.Direction.fromString(direction);
+        return quotesRepository.findByAuthor(author, Sort.by(directionEnum, "quote"))
+                .stream().map(mapper::entityToModel).collect(Collectors.toList());
     }
 
     public List<Quote> getQuotesByOrder() {

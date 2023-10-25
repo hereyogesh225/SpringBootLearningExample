@@ -1,10 +1,12 @@
 package com.dummy.service;
 
+import com.dummy.exception.ResourceNotFoundException;
 import com.dummy.model.Product;
 import com.dummy.persistense.entity.ProductHE;
 import com.dummy.persistense.repository.ProductRepository;
 import com.dummy.utils.Mapper;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
+    private static final String PRODUCT_WITH_ID_NOT_FOUND = "Product with id %d not found";
 
     @Autowired
     private Mapper mapper;
@@ -27,9 +30,11 @@ public class ProductService {
     }
 
     public Product getProductById(int id) {
+        ResourceNotFoundException resourceNotFoundException =
+                new ResourceNotFoundException(String.format(PRODUCT_WITH_ID_NOT_FOUND, id));
         return productRepository.findById(id)
                 .map(mapper::entityToModel)
-                .orElse(null);
+                .orElseThrow(() -> resourceNotFoundException);
     }
 
     public List<Product> getProductsByCategory(String category) {
@@ -40,8 +45,11 @@ public class ProductService {
     }
 
     public void deleteProductById(Integer id) {
-        productRepository.findById(id)
-                .ifPresent(s -> productRepository.deleteById(id));
+        ResourceNotFoundException resourceNotFoundException =
+                new ResourceNotFoundException(String.format(PRODUCT_WITH_ID_NOT_FOUND, id));
+        Optional<ProductHE> optionalProductHE = productRepository.findById(id);
+        optionalProductHE.orElseThrow(() -> resourceNotFoundException);
+        optionalProductHE.ifPresent(s -> productRepository.deleteById(id));
     }
 
     @Transactional

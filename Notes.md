@@ -9,4 +9,11 @@
 * https://www.baeldung.com/spring-data-sorting
 
 ### Give name to JAR file
+
 * https://stackoverflow.com/questions/37698473/spring-boot-control-target-jar-file-name
+
+### how to handle exceptions and remove whitelable error message
+
+* https://www.bezkoder.com/spring-boot-controlleradvice-exceptionhandler/
+* https://www.javainuse.com/spring/boot-exception-handling
+* https://www.baeldung.com/spring-boot-custom-error-page
