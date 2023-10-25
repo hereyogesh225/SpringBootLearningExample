@@ -1,6 +1,5 @@
 package com.dummy.pdf;
 
-import com.dummy.model.Product;
 import com.dummy.model.Quote;
 import com.dummy.utils.Constants;
 import com.lowagie.text.Document;

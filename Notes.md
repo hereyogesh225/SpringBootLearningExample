@@ -19,6 +19,7 @@
 * https://www.baeldung.com/spring-boot-custom-error-page
 
 ### How to generate PDF report
+
 * https://springjava.com/spring-boot/export-data-into-pdf-file-in-spring-boot
 * https://zetcode.com/springboot/servepdf/
 * https://www.codejava.net/frameworks/spring-boot/pdf-export-example
@@ -33,3 +34,9 @@
 * https://www.springboottutorial.com/spring-boot-profiles
 * https://www.baeldung.com/spring-profiles
 * https://dzone.com/articles/spring-boot-profiles-1
+
+### Spring boot validations
+* https://reflectoring.io/bean-validation-with-spring-boot/
+* https://stackoverflow.com/questions/36173332/difference-between-valid-and-validated-in-spring
+* https://www.baeldung.com/spring-valid-vs-validated
+* 

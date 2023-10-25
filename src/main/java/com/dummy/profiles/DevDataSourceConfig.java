@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @Profile("dev")
-public class DevDataSourceConfig implements DataSourceConfig{
+public class DevDataSourceConfig implements DataSourceConfig {
 
     @Override
     public void setup() {
