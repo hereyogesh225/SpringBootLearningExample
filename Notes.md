@@ -39,4 +39,8 @@
 * https://reflectoring.io/bean-validation-with-spring-boot/
 * https://stackoverflow.com/questions/36173332/difference-between-valid-and-validated-in-spring
 * https://www.baeldung.com/spring-valid-vs-validated
-* 
+
+### How to add spring boot banner
+* https://springhow.com/spring-boot-banner-generator/
+* https://devops.datenkollektiv.de/banner.txt/index.html
+* https://www.baeldung.com/spring-boot-custom-banners
