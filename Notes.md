@@ -44,3 +44,8 @@
 * https://springhow.com/spring-boot-banner-generator/
 * https://devops.datenkollektiv.de/banner.txt/index.html
 * https://www.baeldung.com/spring-boot-custom-banners
+
+### Spring Boot Actuator
+* https://www.baeldung.com/spring-boot-actuators
+* https://spring.io/guides/gs/actuator-service/
+* https://docs.spring.io/spring-boot/docs/1.4.0.M2/reference/html/production-ready-monitoring.html
