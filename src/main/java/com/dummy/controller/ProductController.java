@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,6 +23,16 @@ public class ProductController {
     @GetMapping
     public List<Product> listProducts() {
         return productService.getProducts();
+    }
+
+    @GetMapping("query/{query}")
+    public List<ProductHE> getProductsByCustomQuery(@PathVariable String query,
+            @RequestParam(value = "startPrice", required = false, defaultValue = "100") int startPrice,
+            @RequestParam(value = "endPrice", required = false, defaultValue = "100") int endPrice,
+            @RequestParam(value = "titleStart", required = false, defaultValue = "Iphone") String titleStart,
+            @RequestParam(value = "titleEnd", required = false, defaultValue = "Iphone") String titleEnd,
+            @RequestParam(value = "titleIn", required = false, defaultValue = "Iphone") String titleIn) {
+        return productService.getProductsByQuery(query, startPrice, endPrice, titleStart, titleEnd, titleIn);
     }
 
     @GetMapping(value = "pdf")

@@ -7,6 +7,7 @@
 * https://www.baeldung.com/spring-data-jpa-findfirst-vs-findtop
 * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
 * https://www.baeldung.com/spring-data-sorting
+* https://www.baeldung.com/spring-data-derived-queries
 
 ### Give name to JAR file
 

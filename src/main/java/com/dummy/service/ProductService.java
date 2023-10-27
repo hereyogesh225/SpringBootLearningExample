@@ -6,6 +6,7 @@ import com.dummy.pdf.ProductPDFExporter;
 import com.dummy.persistense.entity.ProductHE;
 import com.dummy.persistense.repository.ProductRepository;
 import com.dummy.utils.Mapper;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +30,41 @@ public class ProductService {
                 .stream()
                 .map(mapper::entityToModel)
                 .collect(Collectors.toList());
+    }
+
+    public List<ProductHE> getProductsByQuery(String query, int startPrice, int endPrice,
+            String titleStart, String titleEnd, String titleIn) {
+        List<ProductHE> list = null;
+        switch (query) {
+            case "priceBetween":
+                list = productRepository.findByPriceBetween(startPrice, endPrice);
+                break;
+            case "priceLessThan":
+                list = productRepository.findByPriceLessThan(endPrice);
+                break;
+            case "priceLessThanEqual":
+                list = productRepository.findByPriceLessThanEqual(endPrice);
+                break;
+            case "priceGreaterThan":
+                list = productRepository.findByPriceGreaterThan(startPrice);
+                break;
+            case "priceGreaterThanEqual":
+                list = productRepository.findByPriceGreaterThanEqual(startPrice);
+                break;
+            case "priceIn":
+                list = productRepository.findByPriceIn(Arrays.asList(startPrice, endPrice));
+                break;
+            case "titleStartingWith":
+                list = productRepository.findByTitleStartingWith(titleStart);
+                break;
+            case "titleEndingWith":
+                list = productRepository.findByTitleEndingWith(titleEnd);
+                break;
+            case "titleContaining":
+                list = productRepository.findByTitleContaining(titleIn);
+                break;
+        }
+        return list;
     }
 
     public Product getProductById(int id) {
